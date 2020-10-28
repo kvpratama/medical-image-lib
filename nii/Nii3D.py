@@ -65,3 +65,11 @@ class Nii3D(Nii):
         nii = nib.Nifti1Image(np.transpose(self.nii_np, axes=[2, 1, 0]), affine=None)
         nib.save(nii, save_path)
 
+    def export_raw(self, save_path):
+        if save_path[-4:] != '.raw':
+            save_path += '.raw'
+        fileobj = open(save_path, mode='wb')
+        off = np.array(self.nii_np, dtype=np.int16)
+        off.tofile(fileobj)
+        fileobj.close()
+
